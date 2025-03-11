@@ -1,0 +1,183 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ECG Heartbeat Categorization Dataset | Kaggle</title>
+  <meta charset="utf-8" />
+    <meta name="robots" content="index, follow" />
+  <meta name="description" content="Segmented and Preprocessed ECG Signals for Heartbeat Classification" />
+    <meta name="keywords" content="health,health conditions,classification,heart conditions,deep learning,healthcare" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
+  <meta name="theme-color" content="#008ABC" />
+  <script nonce="ea5XG7UvP37abts5hfzOkA==" type="text/javascript">
+    window["pageRequestStartTime"] = 1740490129186;
+    window["pageRequestEndTime"] = 1740490129320;
+    window["initialPageLoadStartTime"] = new Date().getTime();
+  </script>
+  <script nonce="ea5XG7UvP37abts5hfzOkA==" id="gsi-client" src="https://accounts.google.com/gsi/client" async defer></script>
+  <script nonce="ea5XG7UvP37abts5hfzOkA==">window.KAGGLE_JUPYTERLAB_PATH = "/static/assets/jupyterlab-v4/jupyterlab-index-6b1aba4c066ef5980e86.html";</script>
+  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin="anonymous" /><link rel="preconnect" href="https://stats.g.doubleclick.net" /><link rel="preconnect" href="https://storage.googleapis.com" /><link rel="preconnect" href="https://apis.google.com" />
+    <link href="/static/images/favicon.ico" rel="shortcut icon" type="image/x-icon" id="dynamic-favicon" />
+  <link rel="manifest" href="/static/json/manifest.json" crossorigin="use-credentials">
+
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,400i,500,500i,600,600i,700,700i&display=swap"
+    rel="preload" as="style" />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Symbols:FILL@0..1&display=block"
+    rel="preload" as="style" />
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,400i,500,500i,600,600i,700,700i&display=swap"
+    rel="stylesheet" media="print" id="async-google-font-1" />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Symbols:FILL@0..1&display=block"
+    rel="stylesheet" media="print" id="async-google-font-2" />
+  <script nonce="ea5XG7UvP37abts5hfzOkA==" type="text/javascript">
+    const styleSheetIds = ["async-google-font-1", "async-google-font-2"];
+    styleSheetIds.forEach(function (id) {
+      document.getElementById(id).addEventListener("load", function() {
+        this.media = "all";
+      });
+    });
+  </script>
+
+
+    <link rel="canonical" href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat" />
+    <link rel="stylesheet" type="text/css" href="/static/assets/app.css?v=2d4e7ec4eb689d926191" />
+
+  
+    
+ 
+      <script nonce="ea5XG7UvP37abts5hfzOkA==">
+        try{(function(a,s,y,n,c,h,i,d,e){d=s.createElement("style");
+        d.appendChild(s.createTextNode(""));s.head.appendChild(d);d=d.sheet;
+        y=y.map(x => d.insertRule(x + "{ opacity: 0 !important }"));
+        h.start=1*new Date;h.end=i=function(){y.forEach(x => x<d.cssRules.length ? d.deleteRule(x) : {})};
+        (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+        })(window,document,['.site-header-react__nav'],'dataLayer',2000,{'GTM-52LNT9S':true});}catch(ex){}
+    </script>
+    <script nonce="ea5XG7UvP37abts5hfzOkA==">
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-T7QHS60L4Q', {
+            'optimize_id': 'GTM-52LNT9S',
+            'displayFeaturesTask': null,
+            'send_page_view': false,
+            'content_group1': 'Datasets'
+        });
+    </script>
+    <script nonce="ea5XG7UvP37abts5hfzOkA==" async src="https://www.googletagmanager.com/gtag/js?id=G-T7QHS60L4Q"></script>
+
+  
+    
+    <meta property="og:url" content="https://www.kaggle.com/datasets/shayanfazeli/heartbeat" />
+    <meta property="og:title" content="ECG Heartbeat Categorization Dataset" />
+    <meta property="og:description" content="Segmented and Preprocessed ECG Signals for Heartbeat Classification" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://storage.googleapis.com/kaggle-datasets-images/29414/37484/9a4417b65ea46ec36477358cbbf4bdd2/dataset-card.jpg?t=2018-05-31-18-56-03" />
+    <meta property="fb:app_id" content="2665027677054710" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@kaggledatasets" />
+
+
+  <meta name="twitter:site" content="@Kaggle" /> 
+  
+    
+            <script nonce="ea5XG7UvP37abts5hfzOkA==" type="application/ld+json">{"@context":"http://schema.org/","@type":"Dataset","name":"ECG Heartbeat Categorization Dataset","description":"# Context\n\n# ECG Heartbeat Categorization Dataset\n\n## Abstract\n\nThis dataset is composed of two collections of heartbeat signals derived from two famous datasets in heartbeat classification, [the MIT-BIH Arrhythmia Dataset](https://www.physionet.org/physiobank/database/mitdb/) and [The PTB Diagnostic ECG Database](https://www.physionet.org/physiobank/database/ptbdb/). The number of samples in both collections is large enough for training a deep neural network. \n\nThis dataset has been used in exploring heartbeat classification using deep neural network architectures, and observing some of the capabilities of transfer learning on it. The signals correspond to electrocardiogram (ECG) shapes of heartbeats for the normal case and the cases affected by different arrhythmias and myocardial infarction. These signals are preprocessed and segmented, with each segment corresponding to a heartbeat.\n\n## Content\n\n### Arrhythmia Dataset\n<ul>\n    <li> Number of Samples: 109446</li>\n    <li> Number of Categories: 5</li>\n    <li> Sampling Frequency: 125Hz</li>\n    <li> Data Source: Physionet's MIT-BIH Arrhythmia Dataset</li>\n    <li> Classes: ['N': 0, 'S': 1, 'V': 2, 'F': 3, 'Q': 4]</li>\n</ul>\n\n### The PTB Diagnostic ECG Database\n<ul>\n    <li> Number of Samples: 14552</li>\n    <li> Number of Categories: 2</li>\n    <li> Sampling Frequency: 125Hz</li>\n    <li> Data Source: Physionet's PTB Diagnostic Database</li>\n</ul>\n\n\n**Remark**: *All the samples are cropped, downsampled and padded with zeroes if necessary to the fixed dimension of 188*.\n\n## Data Files\n\nThis dataset consists of a series of CSV files. Each of these CSV files contain a matrix, with each row representing an example in that portion of the dataset. The final element of each row denotes the class to which that example belongs.\n\n## Acknowledgements\n\nMohammad Kachuee, Shayan Fazeli, and Majid Sarrafzadeh. \"ECG Heartbeat Classification: A Deep Transferable Representation.\" [*arXiv preprint arXiv:1805.00794 (2018)*](https://arxiv.org/abs/1805.00794).\n\n# Inspiration\n\nCan you identify myocardial infarction?","url":"https://www.kaggle.com/shayanfazeli/heartbeat","version":1,"keywords":["subject, health and fitness, health","subject, health and fitness, health, health conditions","task, classification","subject, health and fitness, health, health conditions, heart conditions","technique, deep learning","subject, health and fitness, health, healthcare"],"license":{"@type":"CreativeWork","name":"Unknown","url":""},"identifier":["29414"],"includedInDataCatalog":{"@type":"DataCatalog","name":"Kaggle","url":"https://www.kaggle.com"},"creator":{"@type":"Person","name":"Shayan Fazeli","url":"https://www.kaggle.com/shayanfazeli","image":"https://storage.googleapis.com/kaggle-avatars/thumbnails/default-thumb.png"},"distribution":[{"@type":"DataDownload","requiresSubscription":true,"encodingFormat":"zip","fileFormat":"zip","contentUrl":"https://www.kaggle.com/datasets/shayanfazeli/heartbeat/download?datasetVersionNumber=1","contentSize":"103633768 bytes"}],"commentCount":31,"dateModified":"2018-05-31T18:47:34.427Z","discussionUrl":"https://www.kaggle.com/shayanfazeli/heartbeat/discussion","alternateName":"Segmented and Preprocessed ECG Signals for Heartbeat Classification","isAccessibleForFree":true,"thumbnailUrl":"https://storage.googleapis.com/kaggle-datasets-images/29414/37484/9a4417b65ea46ec36477358cbbf4bdd2/dataset-card.jpg?t=2018-05-31-18-56-03","interactionStatistic":[{"@type":"InteractionCounter","interactionType":"http://schema.org/CommentAction","userInteractionCount":31},{"@type":"InteractionCounter","interactionType":"http://schema.org/DownloadAction","userInteractionCount":97440},{"@type":"InteractionCounter","interactionType":"http://schema.org/ViewAction","userInteractionCount":656570},{"@type":"InteractionCounter","interactionType":"http://schema.org/LikeAction","userInteractionCount":892}]}</script>
+        
+
+  
+    
+
+  
+    
+
+
+    <script nonce="ea5XG7UvP37abts5hfzOkA==">window['useKaggleAnalytics'] = true;</script>
+
+  <script id="gapi-target" nonce="ea5XG7UvP37abts5hfzOkA==" src="https://apis.google.com/js/api.js" defer
+    async></script>
+  <script nonce="ea5XG7UvP37abts5hfzOkA==" src="/static/assets/runtime.js?v=526b5bef6d83ace55eeb"></script>
+  <script nonce="ea5XG7UvP37abts5hfzOkA==" src="/static/assets/vendor.js?v=0caeef7a7ba11ccbd5e9"></script>
+  <script nonce="ea5XG7UvP37abts5hfzOkA==" src="/static/assets/app.js?v=1c4f59a88abbecd954e0"></script>
+    <script nonce="ea5XG7UvP37abts5hfzOkA==" type="text/javascript">
+      window.kaggleStackdriverConfig = {
+        key: 'AIzaSyA4eNqUdRRskJsCZWVz-qL655Xa5JEMreE',
+        projectId: 'kaggle-161607',
+        service: 'web-fe',
+        version: 'ci',
+        userId: '0'
+      }
+    </script>
+</head>
+<body>
+  <div id="root">
+    
+
+
+
+
+
+
+
+
+<script nonce="ea5XG7UvP37abts5hfzOkA==" type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+    preferredFont: "TeX",
+    availableFonts: ["STIX", "TeX"],
+    linebreaks: {
+    automatic: true
+    },
+    EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+    inlineMath: [["\\(", "\\)"], ["\\\\(", "\\\\)"]],
+    displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+    processEscapes: true,
+    ignoreClass: "tex2jax_ignore|dno"
+    },
+    TeX: {
+    noUndefined: {
+    attributes: {
+    mathcolor: "red",
+    mathbackground: "#FFEEEE",
+    mathsize: "90%"
+    }
+    }
+    },
+    Macros: {
+    href: "{}"
+    },
+    skipStartupTypeset: true,
+    messageStyle: "none",
+    extensions: ["Safe.js"],
+    });
+</script>
+<script type="text/javascript" nonce="ea5XG7UvP37abts5hfzOkA==">
+  window.addEventListener("DOMContentLoaded", () => {
+    const head = document.getElementsByTagName("head")[0];
+    const lib = document.createElement("script");
+    lib.type = "text/javascript";
+    // Always use the production asset in local dev, which is served from GCS. We tried to proxy and / or serve this
+    // in a better way in localhost, but it didn't work out. See b/328073416#comment8 for details.
+    const forceProdHost = window.location.hostname === "localhost";
+    lib.src = `${forceProdHost ? "https://www.kaggle.com" : ""}/static/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML`;
+    head.appendChild(lib);
+  });
+</script>
+
+
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>
