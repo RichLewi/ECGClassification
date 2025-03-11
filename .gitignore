@@ -305,3 +305,16 @@ TSWLatexianTemp*
 # option is specified. Footnotes are the stored in a file with suffix Notes.bib.
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
+
+
+# Ignore datasets
+dataset/*.csv
+
+# Ignore logs
+logs/**/events.out.tfevents.*
+
+# Ignore models
+models/*.keras
+
+# Ignore system files
+.DS_Store
