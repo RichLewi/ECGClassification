@@ -7,6 +7,11 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
+\usepackage{float}
+\usepackage{booktabs} % For improved table formatting
+\usepackage{siunitx}  % For number alignment (optional)
+\usepackage{subcaption} % For sub-tables
+
 
 % Tikz package for flowchart
 \usepackage{tikz}
@@ -16,6 +21,11 @@
 \tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!20]
 \tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=yellow!30]
 \tikzstyle{arrow} = [thick,->,>=stealth]
+
+\tikzstyle{block} = [rectangle, minimum width=3.5cm, minimum height=1.2cm, text centered, draw=black, fill=blue!20]
+%\tikzstyle{data} = [parallelogram, minimum width=3.5cm, minimum height=1.2cm, text centered, draw=black, fill=green!20]
+\tikzstyle{data} = [trapezium, trapezium angle=75, minimum width=3.5cm, minimum height=1.2cm, text centered, draw=black, fill=green!20]
+\tikzstyle{command} = [rectangle, minimum width=3cm, minimum height=0.8cm, text centered, draw=black, fill=green!20]
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -38,7 +48,7 @@ Insert abstract here.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Insert keywords here.
+MIT-BIH Arrhythmia Dataset,Heartbeat Classification, ECG Heartbeat Classification, ECG Heartbeat Detection, ECG Heartbeat Analysis, ECG Heartbeat Recognition, ECG Heartbeat Classification using Deep Learning, ECG Heartbeat Classification using Convolutional Neural Networks, ECG Heartbeat Classification using Long Short-Term Memory Networks, ECG Heartbeat Classification using Gated Recurrent Units
 \end{IEEEkeywords}
 
 \section{Administrative Details}
@@ -46,73 +56,32 @@ The project is a part of the course ``Deep Learning'' in the masters degree of `
 
 The project files are available on \textit{GitHub} at \textit{https://github.com/RichLewi/ECGClassification.git}.
 
-The project is effected by the EU Artificial Intelligence Regulations (EU) as it regulates AI applications based on a risk-based approach. Since ECG classification involves medical data and health diagnosis, it may fall under the category of high-risk AI systems due to its potential impact on people's health and safety. Compliance with the regulations requires ensuring data privacy and compliance with the General Data Protection Regulation (GDPR), ensuring transparency and traceability, and ensuring human oversight and accountability to avoid bias and discrimination. Before deploying the AI system, it is necessary to conduct a risk assessment and ensure that the system follows medical certification standards. 
+The project is effected by the EU Artificial Intelligence Regulations (EU) \cite{b2} as it regulates AI applications based on a risk-based approach. Since Electrocardiogram (ECG) classification involves medical data and health diagnosis, it may fall under the category of high-risk AI systems due to its potential impact on people's health and safety. Compliance with the regulations requires ensuring data privacy and compliance with the General Data Protection Regulation (GDPR), ensuring transparency and traceability, and ensuring human oversight and accountability to avoid bias and discrimination. Before deploying the AI system, it is necessary to conduct a risk assessment and ensure that the system follows medical certification standards. 
 
-\section{Requirement and Data Analysis}
-In this project, a deep learning model for ECG heartbeat classification is developed, different AI models are compared and evaluated based on their accuracy and loss. The model should be able to classify ECG heartbeats into five classes. The model should achieve an accuracy of at least 95\% on the testing set. Performance metrics such as accuracy, precision, recall, and F1-score are used to evaluate the model and should perform robust across different patients and avoid overfitting.
-The EU regulations regarding medical AI need to be considered, therefor GDPR compliance should be met when handling patient data. 
+\input{sections/Requirement-DataAnalysis.tex}
 
-The dataset used in this project originates from Kaggle's ECG Heartbeat Categorization Dataset. The dataset contains 109446 ECG heartbeats, each labeled as one of the five classes: Normal, Supraventricular, Ventricular, Fusion, and Unknown. The dataset is divided into training and testing sets. The training set contains 87554 samples, and the testing set contains 21890 samples. The dataset is imbalanced, with the Normal class having the most samples and the Fusion class having the least samples. 
+\input{sections/SystemEngineering.tex}
 
-Next we visualize the dataset distribution and some samples of the ECG heartbeats of each class. In figure \ref{fig:dataset_distribution}, the dataset distribution is shown. In figure \ref{fig:ecg_samples}, some samples of the ECG heartbeats of each class are shown.
+\input{sections/AlgorithmDesign.tex}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\textwidth]{images/distribution-classes-bar.png}
-    \caption{Dataset Distribution}
-    \label{fig:dataset_distribution}
-\end{figure}
+\input{sections/ConsolidationOfPerformance-FutureWork.tex}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\textwidth]{images/one-ecg-per-class.png}
-    \caption{ECG Heartbeat Samples}
-    \label{fig:ecg_samples}
-\end{figure}
-
-
-\section{System Engineering}
-In this chapter, the system implementation is described using the flow chart from figure \ref{fig:flowchart}. The system consists of the following steps: data preprocessing, model training, model evaluation. The data preprocessing step involves loading the dataset, splitting the dataset into training, validation and testing sets. The data of training and validation set are normalized and balanced. The model training step involves building the deep learning models, training the models on the training set, and saving the model. The model evaluation step involves evaluating the model on the testing set and calculating the accuracy and loss. 
-
-\begin{figure}
-    \begin{center}
-        \begin{tikzpicture}[node distance=2cm]
-            \node (start) [startstop] {Raw ECG Data};
-            \node (preprocess) [process, below of=start] {Preprocessing (Normalization, Balancing)};
-            \node (model) [process, below of=preprocess] {Model Training (MLP, CNN, LSTM, Hybrid)};
-            \node (evaluate) [process, below of=model] {Performance Evaluation (Metrics)};
-            \node (decision) [decision, below of=evaluate, yshift=-2cm] {Meets Accuracy Target?};
-            \node (end) [startstop, below of=decision, yshift=-2cm] {Deploy Model};
-            
-            \draw [arrow] (start) -- (preprocess);
-            \draw [arrow] (preprocess) -- (model);
-            \draw [arrow] (model) -- (evaluate);
-            \draw [arrow] (evaluate) -- (decision);
-            \draw [arrow] (decision.east) -- ++(1.5,0) |- (model.east) node[midway,above] {No};
-            %\draw [arrow] (evaluate.north) |- (model.east);
-            \draw [arrow] (decision.south) -- (end) node[midway, right] {Yes};
-        \end{tikzpicture}
-    \end{center}
-    \caption{Flowchart of the System}
-    \label{fig:flowchart}
-\end{figure}
-
-
-
-\section{Algorithm Design Using Spiral Approach}
-
-\section{Performance Evaluation}
-
-\section{Conclusion}
-
-\section*{Acknowledgment}
+\input{sections/Conclusion.tex}
 
 \bibliographystyle{IEEEtran}
 \bibliography{Insert your bibliography file here}
 
 \begin{thebibliography}{00}
-    \bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-    \bibitem{b2} “Regulation - EU - 2024/1689 - EN - EUR-LEX.” https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX\%3A32024R1689 (accessed Dec. 02, 2021).
+    %\bibitem{citekey} Author(s), “Title of the Paper,” Journal Name, vol. xx, no. xx, pp. xxx-xxx, Month Year.
+    \bibitem{b1} Shayan Fazeli, "ECG Heartbeat Categorization Dataset."  https://www.kaggle.com/datasets/shayanfazeli/heartbeat (accessed Mar. 11, 2025).
+
+    \bibitem{b2} “Regulation - EU - 2024/1689 - EN - EUR-LEX.” https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX\%3A32024R1689 (accessed Mar. 11, 2025).
+
+    \bibitem{b3} S. Raghav and A. K. Mishra, "Fractal feature based ECG arrhythmia classification," TENCON 2008 - 2008 IEEE Region 10 Conference, Hyderabad, India, 2008, pp. 1-5, doi: 10.1109/TENCON.2008.4766475. keywords: {Fractals;Electrocardiography;Databases;Heart rate variability;Frequency;Testing;Classification algorithms;Pattern recognition;Heart beat;Signal processing algorithms;Beat classification;ECG arrhythmia;Fractal dimension},
+
+    \bibitem{b4} Youhe Huang and Hongru Li and Xia Yu, "A novel time representation input based on deep learning for ECG classification," Biomedical Signal Processing and Control, vol. 83, p. 104628, 2023, doi: https://doi.org/10.1016/j.bspc.2023.104628. keywords: {Heartbeat classification, Time characteristic representation, Information Fusion, Deep learning}
+
+    \bibitem{b5} Y. Ansari, O. Mourad, K. Qaraqe, and E. Serpedin, “Deep Learning for ECG Arrhythmia Detection and Classification: An Overview of Progress for Period 2017–2023,” Frontiers in Physiology, vol. 14, doi: 10.3389/fphys.2023.1246746.
 \end{thebibliography}
 
 \end{document}
