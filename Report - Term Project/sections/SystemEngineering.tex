@@ -9,7 +9,7 @@ In this chapter, the system implementation is described using the flow chart fro
             \node (preprocess) [process, below of=input] {Preprocessing (Scaling, Balancing)};
             \node (training) [process, below of=preprocess] {Model Creation \& Training};
             \node (cnn) [process, below of=training, xshift=-1.7cm] {CNN Model};
-            \node (lstm) [process, right of=cnn, xshift=1.6cm] {LSTM Model};
+            \node (rnn) [process, right of=cnn, xshift=1.6cm] {RNN Model};
             %\node (fusion) [process, below of=cnn] {Model Fusion (Ensemble or Best Model)};
             \node (evaluation) [process, below of=cnn, xshift=1.7cm] {Evaluation (Accuracy, F1-score, Precision, Recall)};
             \node (decision) [decision, below of=evaluation, yshift=-1cm] {Accuracy $\geq$ 95\%?};
@@ -24,9 +24,9 @@ In this chapter, the system implementation is described using the flow chart fro
             \draw [arrow] (input) -- (preprocess);
             \draw [arrow] (cmd-preprocess) -- (training);
             \draw [arrow] (cmd-training) -- (cnn);
-            \draw [arrow] (cmd-training) -- (lstm);
+            \draw [arrow] (cmd-training) -- (rnn);
             \draw [arrow] (cnn) -- (evaluation);
-            \draw [arrow] (lstm) -- (evaluation);
+            \draw [arrow] (rnn) -- (evaluation);
             \draw [arrow] (cmd-evaluation) -- (decision);
             \draw [arrow] (decision.east) -- ++(2.2,0) |- (training.east) node[midway, right] {No};
             \draw [arrow] (decision) -- (output) node[midway, right] {Yes};
@@ -34,7 +34,7 @@ In this chapter, the system implementation is described using the flow chart fro
     \end{center}
     \caption{Flowchart of the System}
     \label{fig:flowchart}
-    \end{figure}
+\end{figure}
     
 The system consists of the following steps: data preprocessing, model training, model evaluation. The data preprocessing step involves loading the dataset, splitting the dataset into training, validation and testing sets. The data of training and validation set are normalized and balanced. To balance the dataset we've decided not to use any synthetic data generation, like the SMOTE (Synthetic Minority Over-sampling Technique) or ADASYN (Adaptive Synthetic Sampling) algorithms to oversample the minority classes, because of the risk that it may create artificial data that does not represent real data. Instead, we've decided to undersample the majority class by 50\% using random undersampling and oversample using random oversampling for the minority classes to balance the dataset. Random oversampling creates new samples by randomly selecting samples from the minority classes and simply duplicates them.
 Normalizing the data is done using the StandardScaler from the scikit-learn library.

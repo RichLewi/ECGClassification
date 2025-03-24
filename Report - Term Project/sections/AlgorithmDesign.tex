@@ -19,7 +19,7 @@ The training data is split into 80\% training and 20\% validation data. The mode
 
 \subsection{Model Evaluation for Iteration 1}
 The models are evaluated based on their performance metrics on the test set. The performance metrics include accuracy, precision, recall, and F1-score. The confusion matrices are used to evaluate the models' performance on each class. The training time of the models is also considered as a performance metric.
-In table \ref{tab:model_performance} the performance metrics of the models on the test set are compared. The CNN and CNN-GRU model basically have the same performance, their accuracy, precision, recall, and F1-score are 98.36\%. The CNN-LSTM model has an accuracy of 98.20\%. Looking at the confusion matrices in table \ref{tab:confusion_matrices} and \ref{tab:normalized_conf_percent}, one can see that classes 1 and 3 are the most difficult to classify. The CNN-LSTM model has the best performance on class 1, while the CNN model has the best performance on class 3 classes. The CNN-LSTM model has the wors performance on these difficult classes but performs well on the other classes. From this we can not conclude which model performs best, but the CNN and CNN-GRU model have the same performance and the CNN-LSTM model has a slightly worse performance. Important to note is that the CNN model has the significantly shortest training time of 8minutes, while the CNN-LSTM model has the longest training time of 94 minutes. The CNN-GRU model has a training time of 74 minutes. The CNN model is the most efficient model in terms of training time and performance.
+In table \ref{tab:model_performance} the performance metrics of the models on the test set are compared. The CNN and CNN-GRU model basically have the same performance, their accuracy, precision, recall, and F1-score are 98.36\%. The CNN-LSTM model has an accuracy of 98.20\%. Looking at the confusion matrices in table \ref{tab:confusion_matrices} and \ref{tab:normalized_conf_percent}, one can see that classes 1 (Supraventricular) and 3 (Fusion) are the most difficult to classify. The CNN-LSTM model has the best performance on class 1, while the CNN model has the best performance on class 3 classes. The CNN-LSTM model has the wors performance on these difficult classes but performs well on the other classes. From this we can not conclude which model performs best, but the CNN and CNN-GRU model have the same performance and the CNN-LSTM model has a slightly worse performance. Important to note is that the CNN model has the significantly shortest training time of 8minutes, while the CNN-LSTM model has the longest training time of 94 minutes. The CNN-GRU model has a training time of 74 minutes. The CNN model is the most efficient model in terms of training time and performance.
 
 Next we try to improve the performance of the models especially on class 1 and 3 by changing the architecture.
 
@@ -160,9 +160,148 @@ Next we try to improve the performance of the models especially on class 1 and 3
 \end{table}
 
 \subsection{Model Design for Iteration 2}
-In the second iteration, the models are improved by adding residual connections to the CNN layers. Residual connections are used to prevent the vanishing gradient problem and allow for deeper networks. The CNN parts of all the models are extended by adding residual connections between the convolutional layers. The models are trained using the same hyperparameters as in the first iteration.
+In the second iteration, the models are improved by adding residual connections to the CNN layers. Residual connections are used to prevent the vanishing gradient problem and allow for deeper networks. The CNN parts of all the models are extended by adding residual connections between the convolutional layers. The models are trained using the same hyperparameters as in the first iteration. 
 
-This change did not lead to any improvements, therefor the models are reverted to the original architecture. 
+\subsection{Model Evaluation for Iteration 2}
+
+The performance metrics of the refined models are shown in table \ref{tab:eval_metrics_it2}. The CNN model has an accuracy of 98.15\%, the CNN-LSTM model has an accuracy of 98.57\%, and the CNN-GRU model has an accuracy of 97.88\%. The refined CNN model and CNN-GRU model have not improved the performance. The refined CNN-LSTM model has a slightly better performance. 
+
+\begin{table}[hbt]
+    \centering
+    \caption{Performance Metrics for Refined Iteration 2 Models}
+    \label{tab:eval_metrics_it2}
+    \begin{tabular}{lcccccc}
+        \toprule
+        \textbf{Model} & \textbf{Training Time} & \textbf{Accuracy} & \textbf{Prec.} & \textbf{Rec.} & \textbf{F1} \\
+        \midrule
+        CNN\_It\_1     & 8min 4.4s  & 98.36\% & 98.36\% & 98.36\% & 98.36\% \\
+        CNN\_LSTM\_It\_1 & 94min 4.9s & 98.20\% & 98.27\% & 98.20\% & 98.23\% \\
+        CNN\_GRU\_It\_1  & 74min 33.7s & 98.36\% & 98.36\% & 98.36\% & 98.36\% \\
+
+        CNN\_It\_2      & 120min 41.4s & 98.15\% & 98.20\% & 98.21\% & 98.21\% \\
+        CNN\_LSTM\_It\_2 & 259min 55.6s & 98.57\% & 98.56\% & 98.57\% & 98.56\% \\
+        CNN\_GRU\_It\_2  & 113min 9.3s & 97.88\% & 97.93\% & 97.88\% & 97.90\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Following the confusion matrices for the models of the second iteration are shown. The confusion matrices with absolute values are shown in table \ref{tab:conf_abs_it2} and the normalized confusion matrices in percent are shown in table \ref{tab:conf_matrices_it2}. The refined CNN-LSTM model has a slightly better performance on all classes apart from the Supraventricular class. The models all have problems finding distinct features between the Supraventricular and Normal classes, aswell as finding the differences from the Fusion class to both the Normal and Ventricular classes. 
+
+\begin{table}[ht]
+    \centering
+    \caption{Confusion Matrices with Absolute Values (Iteration 2)}
+    \label{tab:conf_abs_it2}
+    \begin{minipage}{0.32\textwidth}
+        \caption*{CNN\_Model\_Iteration\_2}
+        \begin{tabular}{cccccc}
+            \toprule
+            & \multicolumn{5}{c}{Predicted} \\
+            \cmidrule(lr){2-6}
+            Actual & 0 & 1 & 2 & 3 & 4 \\
+            \midrule
+            0 & 17900 & 100 & 75  & 22  & 20  \\
+            1 & 82    & 462 & 11  & 1   & 0   \\
+            2 & 24    & 1   & 1395& 24  & 4   \\
+            3 & 9     & 2   & 14  & 137 & 0   \\
+            4 & 13    & 1   & 2   & 1   & 1591\\
+            \bottomrule
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.32\textwidth}
+        \caption*{CNN\_LSTM\_Model\_Iteration\_2}
+        \begin{tabular}{cccccc}
+            \toprule
+            & \multicolumn{5}{c}{Predicted} \\
+            \cmidrule(lr){2-6}
+            Actual & 0 & 1 & 2 & 3 & 4 \\
+            \midrule
+            0 & 18000 & 51  & 36  & 16  & 14  \\
+            1 & 89    & 455 & 9   & 2   & 1   \\
+            2 & 30    & 4   & 1393& 20  & 1   \\
+            3 & 12    & 1   & 12  & 137 & 0   \\
+            4 & 14    & 0   & 1   & 0   & 1593\\
+            \bottomrule
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.32\textwidth}
+        \caption*{CNN\_GRU\_Model\_Iteration\_2}
+        \begin{tabular}{cccccc}
+            \toprule
+            & \multicolumn{5}{c}{Predicted} \\
+            \cmidrule(lr){2-6}
+            Actual & 0 & 1 & 2 & 3 & 4 \\
+            \midrule
+            0 & 17880 & 114 & 83  & 17  & 23  \\
+            1 & 103   & 444 & 7   & 2   & 0   \\
+            2 & 23    & 10  & 1388& 20  & 7   \\
+            3 & 13    & 1   & 17  & 131 & 0   \\
+            4 & 13    & 3   & 7   & 0   & 1585\\
+            \bottomrule
+        \end{tabular}
+    \end{minipage}
+\end{table}
+
+\vspace{1em}
+
+\begin{table}[ht]
+    \centering
+    \caption{Normalized Confusion Matrices in Percent (Iteration 2)}
+    \label{tab:conf_matrices_it2}
+    \begin{minipage}{0.32\textwidth}
+        \caption*{CNN\_Model\_Iteration\_2}
+        \begin{tabular}{cccccc}
+            \toprule
+            & \multicolumn{5}{c}{Predicted} \\
+            \cmidrule(lr){2-6}
+            Actual & 0 & 1 & 2 & 3 & 4 \\
+            \midrule
+            0 & 98.80\% & 0.55\% & 0.41\% & 0.12\% & 0.11\% \\
+            1 & 14.75\% & 83.09\% & 1.98\% & 0.18\% & 0.00\% \\
+            2 & 1.66\%  & 0.07\% & 96.34\% & 1.66\% & 0.28\% \\
+            3 & 5.56\%  & 1.23\% & 8.64\%  & 84.57\% & 0.00\% \\
+            4 & 0.81\%  & 0.06\% & 0.12\%  & 0.06\% & 98.94\% \\
+            \bottomrule
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.32\textwidth}
+        \caption*{CNN\_LSTM\_Model\_Iteration\_2}
+        \begin{tabular}{cccccc}
+            \toprule
+            & \multicolumn{5}{c}{Predicted} \\
+            \cmidrule(lr){2-6}
+            Actual & 0 & 1 & 2 & 3 & 4 \\
+            \midrule
+            0 & 99.35\% & 0.28\% & 0.20\% & 0.09\% & 0.08\% \\
+            1 & 16.01\% & 81.83\% & 1.62\% & 0.36\% & 0.18\% \\
+            2 & 2.07\%  & 0.28\% & 96.20\% & 1.38\% & 0.07\% \\
+            3 & 7.41\%  & 0.62\% & 7.41\%  & 84.57\% & 0.00\% \\
+            4 & 0.87\%  & 0.00\% & 0.06\%  & 0.00\% & 99.07\% \\
+            \bottomrule
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.32\textwidth}
+        \caption*{CNN\_GRU\_Model\_Iteration\_2}
+        \begin{tabular}{cccccc}
+            \toprule
+            & \multicolumn{5}{c}{Predicted} \\
+            \cmidrule(lr){2-6}
+            Actual & 0 & 1 & 2 & 3 & 4 \\
+            \midrule
+            0 & 98.69\% & 0.63\% & 0.46\% & 0.09\% & 0.13\% \\
+            1 & 18.53\% & 79.86\% & 1.26\% & 0.36\% & 0.00\% \\
+            2 & 1.59\%  & 0.69\% & 95.86\% & 1.38\% & 0.48\% \\
+            3 & 8.02\%  & 0.62\% & 10.49\% & 80.86\% & 0.00\% \\
+            4 & 0.81\%  & 0.19\% & 0.44\% & 0.00\% & 98.57\% \\
+            \bottomrule
+        \end{tabular}
+    \end{minipage}
+\end{table}
+
+This change did increase training time significantly without leading to really noticable improvements, only the LSTM model had some improvements. Therefor it was chosen to revert all the models to the original architecture and make more adjustments from there for iteration 3. 
 
 \subsection{Model Design for Iteration 3}
 In the third iteration, the models are improved by adding batch normalization layers after each convolutional layer. Batch normalization layers are used to normalize the activations of the previous layer at each batch. This helps to stabilize and speed up the training process. 
@@ -316,5 +455,5 @@ The confusion matrices in table \ref{tab:conf_abs_it3} and \ref{tab:conf_matrice
     \end{minipage}
 \end{table}
 
-The problems in classification of classes 1 (Supraventricular) and 3 (Fusion) are still present. The models are not able to classify these classes correctly, probably due to their low number of samples in the used dataset. Also, looking at the random examples of each each classes heartbeats, for the untrained eye the differnces between the classes are not clear. 
+The problems in classification of classes 1 (Supraventricular) and 3 (Fusion) are still present. The models are not able to classify these classes correctly, probably due to their low number of samples in the used dataset. Also, looking at the random examples of each classes heartbeats, for the untrained eye the differnces between the classes are not clear. 
 The models are not able to learn the features of these classes well enough, so they can not generalize well on these classes, which is a problem for real-world applications. The models are not able to detect these arrhythmias, which can be dangerous for patients. The models need to be improved to be able to classify these classes correctly. 

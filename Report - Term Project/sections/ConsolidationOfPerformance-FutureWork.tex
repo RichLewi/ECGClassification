@@ -2,7 +2,7 @@
 This section consolidates the performance of our ECG classification models and outlines suggestions for future work to enhance model performance and address the limitations observed in the current implementation.
 
 \subsection{Consolidation of Performance}
-The overall performance of our ECG classification was evaluated using multiple metrics, including accuracy, precision, recall and F1-score. The models trained in Iteration 1 already had really good performance, the best with an accuracy of 98.76\% with a training time of only 8minutes.
+The overall performance of our ECG classification was evaluated using multiple metrics, including accuracy, precision, recall and F1-score. The models trained in Iteration 1 already had really good performance, the best with an accuracy of 98.36\% with a training time of only 8minutes.
 However, a closer look at the per-class performance revealed that certain classes—especially classes 1 and 3 were more challenging. The performance disparities in these classes suggest that while the models are robust overall, the discriminative features for these underperforming classes are not being captured optimally. This could be due to the class imbalance in the dataset, which may have led to the models being biased towards the majority classes. To address this issue, we suggest to experiment with different data augmentation techniques, such as SMOTE, ADASYN instead of simply utilizing Random Oversampling, to balance the dataset and improve the models' performance on the underrepresented classes. 
 Moreover, training times were within acceptable limits (ranging from approximately 8 to 100 minutes per model), indicating that the proposed architectures are computationally efficient for the current dataset.
 
@@ -14,7 +14,7 @@ Table~\ref{tab:current_specs} below summarizes the current specifications alongs
     \centering
     \caption{Current Project Specifications vs. Achieved Performance}
     \label{tab:current_specs}
-    \begin{tabular}{|p{4.2cm}|p{4.0cm}|p{1.7cm}|p{5.2cm}|}
+    \begin{tabular}{|p{2cm}|p{4.0cm}|p{1cm}|p{5cm}|}
         \hline
         \textbf{Specification} & \textbf{Requirement} & \textbf{Met?} & \textbf{Comments / Actions} \\
         \hline
@@ -22,7 +22,7 @@ Table~\ref{tab:current_specs} below summarizes the current specifications alongs
         \hline
         Overall Accuracy & $\geq$95\% on test dataset & Yes & All models exceed 95\% (e.g., CNN: 98.36\%). \\
         \hline
-        Training Time & $\leq$ 5 hours on M2 MacBook Air & Yes & Training times are within 8-95 minutes. \\
+        Training Time & $\leq$ 5 hours on M2 MacBook Air & Yes & Training times are within 8-260 minutes. \\
         \hline
         Generalization & Robust performance on unseen ECG signals & Partially & Some overfitting observed; further validation on external data is needed. \\
         \hline
@@ -40,4 +40,4 @@ Based on our evaluation, we propose additional specifications for future work to
     \item \textbf{Robust Generalization:} Validate model performance on additional external ECG datasets to ensure robustness across different populations and recording conditions.
 \end{enumerate}
 
-By setting additional targets for per-class performance, future iterations should aim to not only meet but exceed the clinical requirements for reliable and robust ECG classification.
+By setting additional targets for per-class performance, future iterations should optimally aim to not only meet but exceed the clinical requirements for reliable and robust ECG classification.
